@@ -33,7 +33,8 @@ use azalea_protocol::{
         },
         ClientIntention, ConnectionProtocol, PROTOCOL_VERSION,
     },
-    resolver, ServerAddress,
+    resolver::{self, resolve_address},
+    ServerAddress,
 };
 
 use azalea_world::{Instance, InstanceContainer};
@@ -82,20 +83,18 @@ pub struct ClientBuilder<'a> {
     pub rt: runtime::Runtime,
     pub account: &'a Account,
     pub address: &'a ServerAddress,
-    pub resolved_address: &'a SocketAddr,
+    pub resolved_address: SocketAddr,
     pub proxy: Option<Proxy>,
 }
 
 impl<'a> ClientBuilder<'a> {
-    pub fn new(
-        account: &'a Account,
-        address: &'a ServerAddress,
-        resolved_address: &'a SocketAddr,
-    ) -> ClientBuilder<'a> {
+    pub fn new(account: &'a Account, address: &'a ServerAddress) -> ClientBuilder<'a> {
         let rt = runtime::Runtime::new().unwrap();
 
         let mut app = App::new();
         app.add_plugins(DefaultPlugins);
+
+        let resolved_address = rt.block_on(resolve_address(address)).unwrap();
 
         Self {
             app,
