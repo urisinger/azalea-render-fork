@@ -167,7 +167,7 @@ impl ClientBuilder<'_> {
             self.rt.handle().clone(),
             self.account,
             self.address,
-            self.resolved_address,
+            &self.resolved_address,
             self.proxy,
         ))?;
 
