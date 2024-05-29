@@ -45,7 +45,7 @@ pub struct ChunkStorage {
 /// and biomes. You can derive the height of the chunk from the number of
 /// sections, but you need a [`ChunkStorage`] to get the minimum Y
 /// coordinate.
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Chunk {
     pub sections: Vec<Section>,
     /// Heightmaps are used for identifying the surface blocks in a chunk.
