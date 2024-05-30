@@ -509,9 +509,7 @@ impl PluginGroup for DefaultPlugins {
             .add(TickPlugin);
         #[cfg(feature = "log")]
         {
-            let mut log = bevy_log::LogPlugin::default();
-            log.level = Level::TRACE;
-            group = group.add(log);
+            group = group.add(bevy_log::LogPlugin::default());
         }
         group
     }
