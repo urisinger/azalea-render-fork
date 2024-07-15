@@ -19,7 +19,7 @@ impl Plugin for ConfigurationPlugin {
         app.add_systems(
             Update,
             handle_in_configuration_state
-                .after(crate::packet_handling::configuration::handle_send_packet_event),
+                .before(crate::packet_handling::configuration::handle_send_packet_event),
         );
     }
 }
